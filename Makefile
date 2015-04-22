@@ -17,11 +17,11 @@ build:
 
 # Run a agate Docker instance
 run:
-	sudo docker run -d -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongodb obiba/agate:snapshot
+	sudo docker run -d -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot
 
 # Run a agate Docker instance with shell
 run-sh:
-	sudo docker run -ti -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongodb obiba/agate:snapshot bash
+	sudo docker run -ti -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot bash
 
 # Show logs
 logs:
@@ -41,7 +41,7 @@ clean: stop
 
 # Run a Mongodb Docker instance
 run-mongodb:
-	sudo docker run -d --name mongodb dockerfile/mongodb
+	sudo docker run -d --name mongodb mongo
 
 # Stop a Mongodb Docker instance
 stop-mongodb:
