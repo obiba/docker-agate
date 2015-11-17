@@ -21,3 +21,6 @@ sleep 2
 
 # Tail the log
 tail -f /var/log/agate/agate.log
+
+# Stop service
+service agate stop

@@ -28,7 +28,7 @@ COPY bin /opt/agate/bin
 RUN chmod +x -R /opt/agate/bin
 
 # Define default command.
-ENTRYPOINT ["bash", "-c", "/opt/agate/bin/start.sh"]
+ENTRYPOINT ["/opt/agate/bin/start.sh"]
 
 # http and https
 EXPOSE 8081 8444
