@@ -10,7 +10,7 @@ fi
 # Wait for MongoDB to be ready
 until curl -i http://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/agate
 do
-  echo "."
+  sleep 1
 done
 
 # Start service
