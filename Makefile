@@ -13,27 +13,27 @@ help:
 
 # Build agate Docker image
 build:
-	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
+	docker build --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
 
 # Run a agate Docker instance
 run:
-	sudo docker run -d -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot
+	docker run -d -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot
 
 # Run a agate Docker instance with shell
 run-sh:
-	sudo docker run -ti -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot bash
+	docker run -ti -p 8844:8444 -p 8881:8081 --name agate --link mongodb:mongo obiba/agate:snapshot bash
 
 # Show logs
 logs:
-	sudo docker logs agate
+	docker logs agate
 
 # Stop a agate Docker instance
 stop:
-	sudo docker stop agate
+	docker stop agate
 
 # Stop and remove a agate Docker instance
 clean: stop
-	sudo docker rm agate
+	docker rm agate
 
 #
 # MongoDB
@@ -41,16 +41,16 @@ clean: stop
 
 # Run a Mongodb Docker instance
 run-mongodb:
-	sudo docker run -d --name mongodb mongo
+	docker run -d --name mongodb mongo
 
 # Stop a Mongodb Docker instance
 stop-mongodb:
-	sudo docker stop mongodb
+	docker stop mongodb
 
 # Stop and remove a Mongodb Docker instance
 clean-mongodb: stop-mongodb
-	sudo docker rm mongodb
+	docker rm mongodb
 
 # Remove all images
 clean-images:
-	sudo docker rmi -f `sudo docker images -q`
+	docker rmi -f `docker images -q`
