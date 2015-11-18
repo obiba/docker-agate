@@ -8,7 +8,7 @@ if [ -e /opt/agate/bin/first_run.sh ]
 fi
 
 # Wait for MongoDB to be ready
-until curl -i http://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/agate
+until curl -i http://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/agate &> /dev/null
 do
   sleep 1
 done
@@ -17,7 +17,10 @@ done
 service agate start
 
 # Wait for service to be ready
-sleep 2
+until ls /var/log/agate/agate.log &> /dev/null
+do
+	sleep 1
+done
 
 # Tail the log
 tail -f /var/log/agate/agate.log
