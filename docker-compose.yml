@@ -7,5 +7,7 @@ agate:
   - mongo
   environment:
   - AGATE_ADMINISTRATOR_PASSWORD=password
+  - RECAPTCHA_SITE_KEY=6Lfo7gYTAAAAAOyl8_MHuH-AVBzRDtpIuJrjL3Pb
+  - RECAPTCHA_SECRET_KEY=6Lfo7gYTAAAAADym-vSDvPBeBCXaxIprA0QXLk_b
 mongo:
   image: mongo
