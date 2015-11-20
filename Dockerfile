@@ -27,6 +27,8 @@ COPY bin /opt/agate/bin
 
 RUN chmod +x -R /opt/agate/bin
 
+ENV AGATE_ADMINISTRATOR_PASSWORD=password
+
 # Define default command.
 ENTRYPOINT ["/opt/agate/bin/start.sh"]
 
