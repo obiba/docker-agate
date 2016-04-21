@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# Check if 1st run. Then configure database.
+# Make sure conf folder is available
+if [ ! -d $AGATE_HOME/conf ]
+	then
+	mkdir -p $AGATE_HOME/conf
+	cp -r /etc/agate/* $AGATE_HOME/conf
+fi
+
+# Check if 1st run. Then configure application.
 if [ -e /opt/agate/bin/first_run.sh ]
     then
     /opt/agate/bin/first_run.sh
@@ -8,22 +15,13 @@ if [ -e /opt/agate/bin/first_run.sh ]
 fi
 
 # Wait for MongoDB to be ready
-until curl -i http://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/agate &> /dev/null
-do
-  sleep 1
-done
+if [ -n "$MONGO_PORT_27017_TCP_ADDR" ]
+	then
+	until curl -i http://$MONGO_PORT_27017_TCP_ADDR:$MONGO_PORT_27017_TCP_PORT/agate &> /dev/null
+	do
+  		sleep 1
+	done
+fi
 
-# Start service
-service agate start
-
-# Wait for service to be ready
-until ls /var/log/agate/agate.log &> /dev/null
-do
-	sleep 1
-done
-
-# Tail the log
-tail -f /var/log/agate/agate.log
-
-# Stop service
-service agate stop
+# Start agate
+/usr/share/agate/bin/agate
