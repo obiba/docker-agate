@@ -2,7 +2,7 @@
 
 # Configure administrator password
 adminpw=$(echo -n $AGATE_ADMINISTRATOR_PASSWORD | xargs java -jar /usr/share/agate-*/tools/lib/obiba-password-hasher-*-cli.jar)
-cat $AGATE_HOME/conf/shiro.ini | sed -e "s/^administrator\s*=.*,/administrator=$adminpw,/" > /tmp/shiro.ini && \
+cat $AGATE_HOME/conf/shiro.ini | sed -e "s,^administrator\s*=.*\,,administrator=$adminpw\,," > /tmp/shiro.ini && \
     mv /tmp/shiro.ini $AGATE_HOME/conf/shiro.ini
 
 # Configure MongoDB
