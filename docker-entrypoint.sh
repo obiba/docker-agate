@@ -2,7 +2,6 @@
 set -e
 
 if [ "$1" = 'app' ]; then
-	chown -R agate /opt/agate
     chown -R agate "$AGATE_HOME"
 
     exec gosu agate /opt/agate/bin/start.sh

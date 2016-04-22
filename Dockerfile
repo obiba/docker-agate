@@ -44,6 +44,7 @@ RUN chmod +x /usr/share/agate/bin/agate
 COPY bin /opt/agate/bin
 
 RUN chmod +x -R /opt/agate/bin
+RUN chown -R agate /opt/agate
 
 VOLUME /srv
 
