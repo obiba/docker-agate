@@ -48,8 +48,8 @@ RUN chown -R agate /opt/agate
 
 VOLUME /srv
 
-# http and https
-EXPOSE 8081 8444
+# http
+EXPOSE 8081
 
 # Define default command.
 COPY ./docker-entrypoint.sh /
