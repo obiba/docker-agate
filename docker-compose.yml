@@ -1,6 +1,7 @@
 agate:
   image: obiba/agate:snapshot
   ports:
+  - "8844:8444"
   - "8881:8081"
   links:
   - mongo
