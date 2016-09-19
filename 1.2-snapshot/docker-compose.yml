@@ -1,0 +1,15 @@
+agate:
+  image: obiba/agate:1.2-snapshot
+  ports:
+  - "8844:8444"
+  - "8881:8081"
+  links:
+  - mongo
+  environment:
+  - AGATE_ADMINISTRATOR_PASSWORD=password
+  - RECAPTCHA_SITE_KEY=6Lfo7gYTAAAAAOyl8_MHuH-AVBzRDtpIuJrjL3Pb
+  - RECAPTCHA_SECRET_KEY=6Lfo7gYTAAAAADym-vSDvPBeBCXaxIprA0QXLk_b
+  volumes:
+  - /tmp/agate:/srv
+mongo:
+  image: mongo
