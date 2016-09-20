@@ -1,5 +1,5 @@
 agate:
-  image: obiba/agate:1.2-snapshot
+  image: obiba/agate:branch-snapshot
   ports:
   - "8844:8444"
   - "8881:8081"

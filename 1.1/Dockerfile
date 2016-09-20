@@ -29,23 +29,26 @@ ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
 ENV JAVA_OPTS=-Xmx2G
 
-ENV AGATE_VERSION 1.2
+ENV AGATE_VERSION 1.1.3
 
 # Install Agate Python Client
 RUN \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip
+
+RUN \
   wget -q -O - https://pkg.obiba.org/obiba.org.key | apt-key add - && \
-  echo 'deb https://pkg.obiba.org unstable/' | tee /etc/apt/sources.list.d/obiba.list && \
-  apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y agate-python-client
+  echo 'deb https://pkg.obiba.org stable/' | tee /etc/apt/sources.list.d/obiba.list && \
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y agate-python-client=$(apt-cache madison agate-python-client | cut -d ' ' -f 3 | grep ${AGATE_VERSION})
 
 # Install Agate Server
 RUN set -x && \
   cd /usr/share/ && \
-  wget -q -O agate.zip https://ci.obiba.org/view/Agate/job/Agate-${AGATE_VERSION}.x/ws/agate-dist/target/agate-dist-${AGATE_VERSION}-SNAPSHOT-dist.zip && \
+  wget -q -O agate.zip https://download.obiba.org/agate/stable/agate-${AGATE_VERSION}-dist.zip && \
   unzip -q agate.zip && \
   rm agate.zip && \
-  mv agate-dist-${AGATE_VERSION}-SNAPSHOT agate
+  mv agate-dist-${AGATE_VERSION} agate
 
 RUN chmod +x /usr/share/agate/bin/agate
 
