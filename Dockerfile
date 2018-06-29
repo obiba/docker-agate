@@ -51,8 +51,8 @@ ENV JAVA_OPTS=-Xmx2G
 RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https && \
-  wget -q -O - https://pkg.obiba.org/obiba.org.key | apt-key add - && \
-  echo 'deb https://pkg.obiba.org unstable/' | tee /etc/apt/sources.list.d/obiba.list && \
+  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 && \
+  echo 'deb https://dl.bintray.com/obiba/deb all main' | tee /etc/apt/sources.list.d/obiba.list && \
   echo agate agate/admin_password select password | debconf-set-selections && \
   echo agate agate/admin_password_again select password | debconf-set-selections && \
   apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y agate agate-python-client

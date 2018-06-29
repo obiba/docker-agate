@@ -55,15 +55,15 @@ RUN \
   DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip
 
 RUN \
-  wget -q -O - https://pkg.obiba.org/obiba.org.key | apt-key add - && \
-  echo 'deb https://pkg.obiba.org stable/' | tee /etc/apt/sources.list.d/obiba.list && \
+  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 && \
+  echo 'deb https://dl.bintray.com/obiba/deb all main' | tee /etc/apt/sources.list.d/obiba.list && \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y agate-python-client=$(apt-cache madison agate-python-client | cut -d ' ' -f 3 | grep ${AGATE_VERSION})
+  DEBIAN_FRONTEND=noninteractive apt-get install -y agate-python-client
 
 # Install Agate Server
 RUN set -x && \
   cd /usr/share/ && \
-  wget -q -O agate.zip https://download.obiba.org/agate/stable/agate-${AGATE_VERSION}-dist.zip && \
+  wget -q -O agate.zip https://github.com/obiba/agate/releases/download/${AGATE_VERSION}/agate-${AGATE_VERSION}-dist.zip && \
   unzip -q agate.zip && \
   rm agate.zip && \
   mv agate-dist-${AGATE_VERSION} agate
