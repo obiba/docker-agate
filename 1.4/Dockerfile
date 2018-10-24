@@ -47,7 +47,7 @@ ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
 ENV JAVA_OPTS=-Xmx2G
 
-ENV AGATE_VERSION 1.4.0
+ENV AGATE_VERSION 1.4.1
 
 # Install Agate Python Client
 RUN \
@@ -63,7 +63,7 @@ RUN \
 # Install Agate Server
 RUN set -x && \
   cd /usr/share/ && \
-  wget -q -O agate.zip https://github.com/obiba/agate/releases/download/${AGATE_VERSION}/agate-dist-${AGATE_VERSION}-dist.zip && \
+  wget -q -O agate.zip https://github.com/obiba/agate/releases/download/${AGATE_VERSION}/agate-${AGATE_VERSION}-dist.zip && \
   unzip -q agate.zip && \
   rm agate.zip && \
   mv agate-dist-${AGATE_VERSION} agate
