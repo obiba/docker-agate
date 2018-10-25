@@ -66,7 +66,7 @@ RUN set -x && \
   wget -q -O agate.zip https://github.com/obiba/agate/releases/download/${AGATE_VERSION}/agate-${AGATE_VERSION}-dist.zip && \
   unzip -q agate.zip && \
   rm agate.zip && \
-  mv agate-dist-${AGATE_VERSION} agate
+  mv agate-${AGATE_VERSION} agate
 
 RUN chmod +x /usr/share/agate/bin/agate
 
