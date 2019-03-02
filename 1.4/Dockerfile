@@ -6,7 +6,7 @@
 
 FROM obiba/docker-gosu:latest AS gosu
 
-FROM openjdk:8-jdk-stretch AS server-relased
+FROM openjdk:8-jdk-stretch AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
@@ -52,7 +52,7 @@ RUN chown -R agate /opt/agate
 VOLUME /srv
 
 # http and https
-EXPOSE 8082 8444
+EXPOSE 8081 8444
 
 # Define default command.
 COPY ./docker-entrypoint.sh /
