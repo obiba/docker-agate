@@ -1,7 +1,7 @@
 #
-# Mica Dockerfile
+# Agate Dockerfile
 #
-# https://github.com/obiba/docker-mica
+# https://github.com/obiba/docker-agate
 #
 
 FROM obiba/docker-gosu:latest AS gosu

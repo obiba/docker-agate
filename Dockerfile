@@ -1,5 +1,5 @@
 #
-# agate Dockerfile
+# Agate Dockerfile
 #
 # https://github.com/obiba/docker-agate
 #
