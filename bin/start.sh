@@ -16,8 +16,8 @@ if [ ! -d $AGATE_HOME/conf ]
 	mkdir -p $AGATE_HOME/conf
 	cp -r /usr/share/agate/conf/* $AGATE_HOME/conf
 	# So that application is accessible from outside of docker
-	sed s/address:\ localhost//g $MICA_HOME/conf/application.yml > /tmp/application.yml && \
-	    mv /tmp/application.yml $MICA_HOME/conf/application.yml
+	sed s/address:\ localhost//g $AGATE_HOME/conf/application.yml > /tmp/application.yml && \
+	    mv /tmp/application.yml $AGATE_HOME/conf/application.yml
 fi
 
 # Check if 1st run. Then configure application.
