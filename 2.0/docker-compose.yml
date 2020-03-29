@@ -1,7 +1,7 @@
 version: '3'
 services:
         agate:
-                image: obiba/agate:1.6
+                image: obiba/agate
                 ports:
                         - "8844:8444"
                         - "8881:8081"
