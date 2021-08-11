@@ -6,4 +6,8 @@ no_cache=false
 
 # Build Docker image
 build:
-	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
+	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:$(tag)" .
+
+push:
+	sudo docker image push obiba/agate:$(tag)
+
