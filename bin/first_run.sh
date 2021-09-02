@@ -16,9 +16,19 @@ cat $AGATE_HOME/conf/shiro.ini | sed -e "s,^administrator\s*=.*\,,administrator=
     mv /tmp/shiro.ini $AGATE_HOME/conf/shiro.ini
 
 # Configure MongoDB
+if [ -n "$MONGO_DB" ]
+	then
+	sed s,localhost:27017/agate,localhost:27017/$MONGO_DB,g $AGATE_HOME/conf/application.yml > /tmp/application.yml
+	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
+fi
 if [ -n "$MONGO_HOST" ]
 	then
-	sed s/localhost:27017/$MONGO_HOST:$MONGO_PORT/g $AGATE_HOME/conf/application.yml > /tmp/application.yml
+	MGP = 27017
+	if [ -n "$MONGO_PORT" ]
+		then
+		MGP = $MONGO_PORT
+	fi
+	sed s/localhost:27017/$MONGO_HOST:$MGP/g $AGATE_HOME/conf/application.yml > /tmp/application.yml
 	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
 fi
 
