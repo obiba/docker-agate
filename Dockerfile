@@ -6,7 +6,7 @@
 
 FROM obiba/docker-gosu:latest AS gosu
 
-FROM openjdk:8-jdk-stretch AS server-released
+FROM openjdk:8-jdk-bullseye AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
