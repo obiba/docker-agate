@@ -29,7 +29,7 @@ RUN \
   curl -fsSL https://www.obiba.org/assets/obiba-pub.pem | apt-key add - && \
   echo 'deb https://obiba.jfrog.io/artifactory/debian-local all main' | tee /etc/apt/sources.list.d/obiba.list && \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y agate-python-client
+  DEBIAN_FRONTEND=noninteractive apt-get install -y python3-distutils agate-python-client
 
 # Install Agate Server
 RUN set -x && \
