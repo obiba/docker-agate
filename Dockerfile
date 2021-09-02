@@ -34,7 +34,7 @@ RUN source $NVM_DIR/nvm.sh; \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
-FROM openjdk:8-jdk-stretch AS server
+FROM openjdk:8-jdk-bullseye AS server
 
 ENV AGATE_ADMINISTRATOR_PASSWORD password
 ENV AGATE_HOME /srv
