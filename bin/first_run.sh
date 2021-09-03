@@ -23,10 +23,10 @@ if [ -n "$MONGO_DB" ]
 fi
 if [ -n "$MONGO_HOST" ]
 	then
-	MGP = 27017
+	MGP=27017
 	if [ -n "$MONGO_PORT" ]
 		then
-		MGP = $MONGO_PORT
+		MGP=$MONGO_PORT
 	fi
 	sed s/localhost:27017/$MONGO_HOST:$MGP/g $AGATE_HOME/conf/application.yml > /tmp/application.yml
 	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
