@@ -41,10 +41,13 @@ ENV AGATE_HOME /srv
 ENV JAVA_OPTS -Xmx2G
 
 WORKDIR /tmp
-COPY --from=building /projects/agate/agate-dist/target/agate_*.deb .
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends daemon psmisc && \
-    DEBIAN_FRONTEND=noninteractive dpkg -i agate_*.deb
+COPY --from=building /projects/agate/agate-dist/target/agate-*-dist.zip .
+RUN cd /usr/share/ && \
+  unzip -q /tmp/agate-*-dist.zip && \
+  rm /tmp/agate-*-dist.zip && \
+  mv agate-* agate
+
+RUN adduser --system --home $AGATE_HOME --no-create-home --disabled-password agate
 
 COPY --from=gosu /usr/local/bin/gosu /usr/local/bin/
 
