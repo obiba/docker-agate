@@ -4,12 +4,38 @@
 
 no_cache=false
 
-# Build Docker image
+docker_compose_file=docker-compose.yml
+
+up:
+	docker-compose -f $(docker_compose_file) up -d --remove-orphans
+
+down:
+	docker-compose -f $(docker_compose_file) down
+
+stop:
+	docker-compose -f $(docker_compose_file) stop
+
+start:
+	docker-compose -f $(docker_compose_file) start
+
+restart:
+	docker-compose -f $(docker_compose_file) restart
+
+pull:
+	docker-compose -f $(docker_compose_file) pull --include-deps
+
+logs:
+	docker-compose -f $(docker_compose_file) logs -f
+
 build:
+	docker-compose -f $(docker_compose_file) build --no-cache
+
+# Build Docker image
+build-image:
 	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
 
-build-version:
-	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:$(version)" $(version)
+push-image:
+	sudo docker image push obiba/agate:snapshot
 
-build-branch:
-	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:branch-snapshot" branch-snapshot 
+clean:
+	rm -rf target
