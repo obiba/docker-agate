@@ -1,19 +1,19 @@
 version: '3'
 services:
         agate:
-                image: obiba/agate:snapshot
+                #image: obiba/agate:snapshot
+                build: .
                 ports:
-                        - "8844:8444"
-                        - "8881:8081"
+                        - "8871:8081"
                 links:
                         - mongo
                 environment:
-                        - AGATE_ADMINISTRATOR_PASSWORD=password
+                        - AGATE_ADMINISTRATOR_PASSWORD=${AGATE_ADMINISTRATOR_PASSWORD}
                         - MONGO_HOST=mongo
                         - MONGO_PORT=27017
-                        - RECAPTCHA_SITE_KEY=6Lfo7gYTAAAAAOyl8_MHuH-AVBzRDtpIuJrjL3Pb
-                        - RECAPTCHA_SECRET_KEY=6Lfo7gYTAAAAADym-vSDvPBeBCXaxIprA0QXLk_b
+                        - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
+                        - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
                 volumes:
-                        - /tmp/agate:/srv
+                        - ${AGATE_DIR}:/srv
         mongo:
                 image: mongo
