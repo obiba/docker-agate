@@ -1,8 +1,8 @@
 version: '3'
 services:
         agate:
-                #image: obiba/agate:snapshot
-                build: .
+                image: obiba/agate:snapshot
+                #build: .
                 ports:
                         - "8871:8081"
                 links:
