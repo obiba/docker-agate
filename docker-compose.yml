@@ -16,4 +16,4 @@ services:
                 volumes:
                         - ${AGATE_DIR}:/srv
         mongo:
-                image: mongo
+                image: mongo:6.0
