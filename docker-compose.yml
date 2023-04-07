@@ -3,7 +3,6 @@ services:
         agate:
                 image: obiba/agate
                 ports:
-                        - "8844:8444"
                         - "8881:8081"
                 links:
                         - mongo
@@ -16,4 +15,4 @@ services:
                 volumes:
                         - /tmp/agate:/srv
         mongo:
-                image: mongo
+                image: mongo:6.0
