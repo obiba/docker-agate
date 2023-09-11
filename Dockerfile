@@ -18,12 +18,12 @@ ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
 ENV JAVA_OPTS=-Xmx2G
 
-ENV AGATE_VERSION 2.8.0
+ENV AGATE_VERSION 2.8.1
 
 # Install Agate Python Client
 RUN \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \ 
+  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip curl
 
 RUN \
