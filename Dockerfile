@@ -17,7 +17,7 @@ RUN mkdir -p $NVM_DIR
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends devscripts debhelper build-essential fakeroot git && \
+    apt-get install -y --no-install-recommends curl devscripts debhelper build-essential fakeroot git && \
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash && \
     source $NVM_DIR/nvm.sh && \
     nvm install $NODE_VERSION && \
