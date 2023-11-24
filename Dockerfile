@@ -6,7 +6,7 @@
 
 FROM obiba/docker-gosu:latest AS gosu
 
-FROM openjdk:8-jdk-bullseye AS server-released
+FROM docker.io/library/eclipse-temurin:8-jre AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
@@ -24,13 +24,9 @@ ENV AGATE_VERSION 2.8.2
 RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip curl
+  DEBIAN_FRONTEND=noninteractive apt-get install -y apt-transport-https unzip curl python3-pip libcurl4-openssl-dev libssl-dev
 
-RUN \
-  curl -fsSL https://www.obiba.org/assets/obiba-pub.pem | apt-key add - && \
-  echo 'deb https://obiba.jfrog.io/artifactory/debian-local all main' | tee /etc/apt/sources.list.d/obiba.list && \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y python3-distutils agate-python-client
+RUN pip install obiba-agate
 
 # Install Agate Server
 RUN set -x && \
