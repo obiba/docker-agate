@@ -4,7 +4,7 @@
 # https://github.com/obiba/docker-agate
 #
 
-FROM obiba/docker-gosu:latest AS gosu
+FROM tianon/gosu:latest AS gosu
 
 FROM maven:3-amazoncorretto-17-debian AS building
 

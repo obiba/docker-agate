@@ -32,7 +32,7 @@ build:
 
 # Build Docker image
 build-image:
-	sudo docker build --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
+	sudo docker build --pull --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
 
 push-image:
 	sudo docker image push obiba/agate:snapshot
