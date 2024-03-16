@@ -6,7 +6,7 @@
 
 FROM tianon/gosu:latest AS gosu
 
-FROM maven:3-amazoncorretto-17-debian AS building
+FROM maven:3-amazoncorretto-21-debian AS building
 
 ENV NVM_DIR /root/.nvm
 ENV NODE_LTS_VERSION iron
@@ -34,7 +34,7 @@ RUN source $NVM_DIR/nvm.sh; \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
-FROM docker.io/library/eclipse-temurin:17-jre AS server
+FROM docker.io/library/eclipse-temurin:21-jre AS server
 
 ENV AGATE_ADMINISTRATOR_PASSWORD password
 ENV AGATE_HOME /srv
