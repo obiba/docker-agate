@@ -6,7 +6,7 @@
 
 FROM obiba/docker-gosu:latest AS gosu
 
-FROM docker.io/library/eclipse-temurin:8-jre AS server-released
+FROM docker.io/library/eclipse-temurin:21-jre AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
@@ -18,7 +18,7 @@ ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
 ENV JAVA_OPTS=-Xmx2G
 
-ENV AGATE_VERSION 2.10.0
+ENV AGATE_VERSION 3.0.0
 
 # Install Agate Python Client
 RUN \
