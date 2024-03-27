@@ -4,7 +4,7 @@
 # https://github.com/obiba/docker-agate
 #
 
-FROM obiba/docker-gosu:latest AS gosu
+FROM tianon/gosu:latest AS gosu
 
 FROM docker.io/library/eclipse-temurin:21-jre AS server-released
 
