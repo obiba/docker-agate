@@ -27,12 +27,17 @@ elif [ -n "$MONGO_HOST" ]
 	then
 		MGP=$MONGO_PORT
 	fi
+	MGDB=agate
+	if [ -n "$MONGO_DB" ]
+	then
+		MGDB=$MONGO_DB
+	fi
 	MGURI="$MONGO_HOST:$MGP"
 	if [ -n "$MONGO_USER" ] && [ -n "$MONGO_PASSWORD" ]
 	then
-		MGURI="$MONGO_USER:$MONGO_PASSWORD@$MGURI/$MONGO_DB?authSource=admin"
+		MGURI="$MONGO_USER:$MONGO_PASSWORD@$MGURI/$MGDB?authSource=admin"
 	else
-		MGURI="$MGURI/$MONGO_DB"
+		MGURI="$MGURI/$MGDB"
 	fi
 	sed s,localhost:27017/agate,$MGURI,g $AGATE_HOME/conf/application.yml > /tmp/application.yml
 	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
