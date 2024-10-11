@@ -6,7 +6,7 @@
 
 FROM tianon/gosu:latest AS gosu
 
-FROM docker.io/library/eclipse-temurin:21-jre AS server-released
+FROM docker.io/library/eclipse-temurin:21-jre-jammy AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
