@@ -17,7 +17,7 @@ services:
                 volumes:
                         - /tmp/agate:/srv
         mongo:
-                image: mongo:6.0
+                image: mongo
                 environment:
                         - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-obiba}
                         - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-password}
