@@ -4,9 +4,7 @@
 # https://github.com/obiba/docker-agate
 #
 
-FROM tianon/gosu:latest AS gosu
-
-FROM maven:3-amazoncorretto-21-debian AS building
+FROM maven:3.9-eclipse-temurin-21 AS building
 
 ENV NVM_DIR /root/.nvm
 ENV NODE_LTS_VERSION iron
@@ -34,14 +32,14 @@ RUN source $NVM_DIR/nvm.sh; \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
-FROM docker.io/library/eclipse-temurin:21-jre AS server
+FROM docker.io/library/eclipse-temurin:21-jre-noble AS server
 
 ENV AGATE_ADMINISTRATOR_PASSWORD password
 ENV AGATE_HOME /srv
 ENV JAVA_OPTS -Xmx2G
 
 RUN apt-get update && \
-    apt-get install -y unzip
+    apt-get install -y unzip gosu
 
 WORKDIR /tmp
 COPY --from=building /projects/agate/agate-dist/target/agate-*-dist.zip .
@@ -51,8 +49,6 @@ RUN cd /usr/share/ && \
   mv agate-* agate
 
 RUN adduser --system --home $AGATE_HOME --no-create-home --disabled-password agate
-
-COPY --from=gosu /usr/local/bin/gosu /usr/local/bin/
 
 COPY /bin /opt/agate/bin
 RUN chmod +x -R /opt/agate/bin; \
