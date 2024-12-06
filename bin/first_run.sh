@@ -18,8 +18,8 @@ cat $AGATE_HOME/conf/shiro.ini | sed -e "s,^administrator\s*=.*\,,administrator=
 # Configure MongoDB
 if [ -n "$MONGODB_URI" ]
 then
-	sed s,localhost:27017/agate,$MONGODB_URI,g $AGATE_HOME/conf/application.yml > /tmp/application.yml
-	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
+	sed s,localhost:27017/agate,$MONGODB_URI,g $AGATE_HOME/conf/application-prod.yml > /tmp/application-prod.yml
+	mv -f /tmp/application-prod.yml $AGATE_HOME/conf/application-prod.yml
 elif [ -n "$MONGO_HOST" ]
 	then
   MGP=27017
@@ -39,14 +39,14 @@ elif [ -n "$MONGO_HOST" ]
 	else
 		MGURI="$MGURI/$MGDB"
 	fi
-	sed s,localhost:27017/agate,$MGURI,g $AGATE_HOME/conf/application.yml > /tmp/application.yml
-	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
+	sed s,localhost:27017/agate,$MGURI,g $AGATE_HOME/conf/application-prod.yml > /tmp/application-prod.yml
+	mv -f /tmp/application-prod.yml $AGATE_HOME/conf/application-prod.yml
 fi
 
 # Configure ReCaptcha
 if [ -n "$RECAPTCHA_SITE_KEY" -a -n "$RECAPTCHA_SECRET_KEY" ]
 	then
-	sed s/secret:\ 6Lfo7gYT.*/secret:\ $RECAPTCHA_SECRET_KEY/ $AGATE_HOME/conf/application.yml | \
-	sed s/reCaptchaKey:.*/reCaptchaKey:\ $RECAPTCHA_SITE_KEY/ > /tmp/application.yml
-	mv -f /tmp/application.yml $AGATE_HOME/conf/application.yml
+	sed s/secret:\ 6Lfo7gYT.*/secret:\ $RECAPTCHA_SECRET_KEY/ $AGATE_HOME/conf/application-prod.yml | \
+	sed s/reCaptchaKey:.*/reCaptchaKey:\ $RECAPTCHA_SITE_KEY/ > /tmp/application-prod.yml
+	mv -f /tmp/application-prod.yml $AGATE_HOME/conf/application-prod.yml
 fi
