@@ -1,4 +1,3 @@
-version: '3'
 services:
         agate:
                 image: obiba/agate:snapshot
