@@ -23,6 +23,11 @@ fi
 # Upgrade configuration
 if [[ -f $AGATE_HOME/conf/application.yml && ! -f $AGATE_HOME/conf/application-prod.yml ]]
 	then
+	if grep -q "profiles:" $AGATE_HOME/conf/application.yml
+		then
+			cp $AGATE_HOME/conf/application.yml $AGATE_HOME/conf/application.yml.2.x
+			cat $AGATE_HOME/conf/application.yml.2.x | grep -v "profiles:" > $AGATE_HOME/conf/application.yml
+	fi
 	mv -f $AGATE_HOME/conf/application.yml $AGATE_HOME/conf/application-prod.yml
 fi
 
