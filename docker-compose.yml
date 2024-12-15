@@ -1,6 +1,7 @@
 services:
         agate:
-                image: obiba/agate
+                image: obiba/agate:latest
+                #image: obiba/agate:test
                 ports:
                         - "8881:8081"
                 links:
