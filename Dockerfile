@@ -40,8 +40,9 @@ RUN chmod +x /usr/share/agate/bin/agate
 
 COPY ./bin /opt/agate/bin
 
-RUN chmod +x -R /opt/agate/bin && \
-  adduser --system --home $AGATE_HOME --no-create-home --disabled-password agate && \
+RUN groupadd --system --gid 10041 agate && \
+  useradd --system --home $AGATE_HOME --no-create-home --uid 10041 --gid agate agate; \
+  chmod +x -R /opt/agate/bin && \
   chown -R agate /opt/agate
 
 VOLUME /srv
