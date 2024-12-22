@@ -45,6 +45,12 @@ RUN groupadd --system --gid 10041 agate && \
   chmod +x -R /opt/agate/bin && \
   chown -R agate /opt/agate
 
+# Clean up
+RUN apt remove -y unzip curl wget && \
+  apt autoremove -y && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/*
+
 VOLUME /srv
 
 # http and https
