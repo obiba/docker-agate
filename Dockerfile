@@ -55,6 +55,12 @@ RUN chmod +x -R /opt/agate/bin; \
     chown -R agate /opt/agate; \
     chmod +x /usr/share/agate/bin/agate
 
+# Clean up
+RUN apt remove -y unzip curl wget && \
+apt autoremove -y && \
+apt clean && \
+rm -rf /var/lib/apt/lists/* /tmp/*
+
 VOLUME $AGATE_HOME
 EXPOSE 8081 8444
 
