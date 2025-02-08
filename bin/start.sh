@@ -38,14 +38,5 @@ if [ -e /opt/agate/bin/first_run.sh ]
   	mv /opt/agate/bin/first_run.sh /opt/agate/bin/first_run.sh.done
 fi
 
-# Wait for MongoDB to be ready
-if [ -n "$MONGO_HOST" ]
-	then
-	until curl -i http://$MONGO_HOST:$MONGO_PORT/agate &> /dev/null
-	do
-  		sleep 1
-	done
-fi
-
 # Start agate
 /usr/share/agate/bin/agate

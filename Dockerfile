@@ -46,7 +46,7 @@ RUN groupadd --system --gid 10041 agate && \
   chown -R agate /opt/agate
 
 # Clean up
-RUN apt remove -y unzip wget && \
+RUN apt remove -y unzip wget curl && \
   apt autoremove -y && \
   apt clean && \
   rm -rf /var/lib/apt/lists/* /tmp/*
