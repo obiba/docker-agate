@@ -4,7 +4,7 @@ services:
                 #build: .
                 ports:
                         - "8871:8081"
-                links:
+                depends_on:
                         - mongo
                 environment:
                         - AGATE_ADMINISTRATOR_PASSWORD=${AGATE_ADMINISTRATOR_PASSWORD}
