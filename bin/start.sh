@@ -32,11 +32,12 @@ if [[ -f $AGATE_HOME/conf/application.yml && ! -f $AGATE_HOME/conf/application-p
 fi
 
 # Check if 1st run. Then configure application.
-if [ -e /opt/agate/bin/first_run.sh ]
+if [ ! -e $AGATE_HOME/.first_run.sh.done ]
   then
   	/opt/agate/bin/first_run.sh
-  	mv /opt/agate/bin/first_run.sh /opt/agate/bin/first_run.sh.done
+  	touch $AGATE_HOME/.first_run.sh.done
 fi
 
 # Start agate
-/usr/share/agate/bin/agate
+echo "Starting Agate..."
+exec /usr/share/agate/bin/agate
