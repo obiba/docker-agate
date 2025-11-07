@@ -4,66 +4,48 @@
 # https://github.com/obiba/docker-agate
 #
 
-FROM maven:3.9-eclipse-temurin-21 AS building
+FROM docker.io/library/eclipse-temurin:25-jre-noble AS server-released
 
-ENV AGATE_BRANCH=master
-ENV NVM_DIR=/root/.nvm
-ENV NODE_LTS_VERSION=krypton
+LABEL OBiBa=<dev@obiba.org>
 
-
-
-SHELL ["/bin/bash", "-c"]
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl devscripts debhelper build-essential fakeroot git
-
-RUN mkdir -p $NVM_DIR && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    ls -lat $NVM_DIR && \
-    source $NVM_DIR/nvm.sh && \
-    nvm install --lts=$NODE_LTS_VERSION
-
-WORKDIR /projects
-RUN git clone https://github.com/obiba/agate.git
-
-WORKDIR /projects/agate
-
-RUN source $NVM_DIR/nvm.sh; \
-    git checkout $AGATE_BRANCH; \
-    mvn clean install && \
-    mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
-
-FROM docker.io/library/eclipse-temurin:25-jre-noble AS server
-
+ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
-ENV JAVA_OPTS=-Xmx2G
+ENV AGATE_DIST=/usr/share/agate
+ENV JAVA_OPTS="-Xms1G -Xmx2G -XX:+UseG1GC"
 
-RUN apt-get update && \
-    apt-get install -y unzip gosu
+ENV AGATE_VERSION=4.0-SNAPSHOT
 
 WORKDIR /tmp
-COPY --from=building /projects/agate/agate-dist/target/agate-*-dist.zip .
-RUN cd /usr/share/ && \
-  unzip -q /tmp/agate-*-dist.zip && \
-  rm /tmp/agate-*-dist.zip && \
-  mv agate-* agate
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y vim gosu daemon psmisc apt-transport-https unzip curl python3-pip libcurl4-openssl-dev libssl-dev && \
+  apt-get clean &&  \
+  rm -rf /var/lib/apt/lists/*
 
-RUN adduser --system --home $AGATE_HOME --no-create-home --disabled-password agate
+# Install Agate Server
+COPY agate/agate-dist/target/agate-${AGATE_VERSION}-dist/agate-${AGATE_VERSION} /usr/share/agate
 
-COPY /bin /opt/agate/bin
-RUN chmod +x -R /opt/agate/bin; \
-    chown -R agate /opt/agate; \
-    chmod +x /usr/share/agate/bin/agate
+# Plugins dependencies
+WORKDIR /projects
+
+COPY docker-agate/bin /opt/agate/bin
+
+RUN groupadd --system --gid 10041 agate && \
+  useradd --system --home $AGATE_HOME --no-create-home --uid 10041 --gid agate agate; \
+  chmod +x -R /opt/agate/bin && \
+  chown -R agate /opt/agate
 
 # Clean up
-RUN apt remove -y unzip wget && \
-apt autoremove -y && \
-apt clean && \
-rm -rf /var/lib/apt/lists/* /tmp/*
+RUN apt remove -y curl && \
+  apt autoremove -y && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/*
+
+WORKDIR $AGATE_HOME
 
 VOLUME $AGATE_HOME
 EXPOSE 8081 8444
 
-COPY ./docker-entrypoint.sh /
+COPY docker-agate/docker-entrypoint.sh /
 ENTRYPOINT ["/bin/bash" ,"/docker-entrypoint.sh"]
 CMD ["app"]
