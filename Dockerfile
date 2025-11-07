@@ -6,30 +6,19 @@
 
 FROM maven:3.9-eclipse-temurin-21 AS building
 
-ENV AGATE_BRANCH=master
-ENV NVM_DIR=/root/.nvm
-ENV NODE_LTS_VERSION=krypton
-
-
+ENV AGATE_BRANCH=npm
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl devscripts debhelper build-essential fakeroot git
 
-RUN mkdir -p $NVM_DIR && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
-    ls -lat $NVM_DIR && \
-    source $NVM_DIR/nvm.sh && \
-    nvm install --lts=$NODE_LTS_VERSION
-
 WORKDIR /projects
 RUN git clone https://github.com/obiba/agate.git
 
 WORKDIR /projects/agate
 
-RUN source $NVM_DIR/nvm.sh; \
-    git checkout $AGATE_BRANCH; \
+RUN git checkout $AGATE_BRANCH; \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
