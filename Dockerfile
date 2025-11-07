@@ -6,21 +6,22 @@
 
 FROM maven:3.9-eclipse-temurin-21 AS building
 
-ENV NVM_DIR /root/.nvm
-ENV NODE_LTS_VERSION iron
-ENV AGATE_BRANCH master
+ENV AGATE_BRANCH=master
+ENV NVM_DIR=/root/.nvm
+ENV NODE_LTS_VERSION=krypton
 
-RUN mkdir -p $NVM_DIR
+
 
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl devscripts debhelper build-essential fakeroot git && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash && \
+    apt-get install -y --no-install-recommends curl devscripts debhelper build-essential fakeroot git
+
+RUN mkdir -p $NVM_DIR && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash && \
+    ls -lat $NVM_DIR && \
     source $NVM_DIR/nvm.sh && \
-    nvm install --lts=$NODE_LTS_VERSION && \
-    npm install -g bower grunt && \
-    echo '{ "allow_root": true }' > $HOME/.bowerrc
+    nvm install --lts=$NODE_LTS_VERSION
 
 WORKDIR /projects
 RUN git clone https://github.com/obiba/agate.git
@@ -32,11 +33,10 @@ RUN source $NVM_DIR/nvm.sh; \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
-FROM docker.io/library/eclipse-temurin:21-jre-noble AS server
+FROM docker.io/library/eclipse-temurin:25-jre-noble AS server
 
-ENV AGATE_ADMINISTRATOR_PASSWORD password
-ENV AGATE_HOME /srv
-ENV JAVA_OPTS -Xmx2G
+ENV AGATE_HOME=/srv
+ENV JAVA_OPTS=-Xmx2G
 
 RUN apt-get update && \
     apt-get install -y unzip gosu
