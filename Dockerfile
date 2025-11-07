@@ -4,7 +4,7 @@
 # https://github.com/obiba/docker-agate
 #
 
-FROM docker.io/library/eclipse-temurin:21-jre-noble AS server-released
+FROM docker.io/library/eclipse-temurin:25-jre-noble AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
