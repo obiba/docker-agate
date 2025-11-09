@@ -8,9 +8,9 @@ FROM docker.io/library/eclipse-temurin:25-jre-noble AS server-released
 
 LABEL OBiBa <dev@obiba.org>
 
-ENV LANG C.UTF-8
-ENV LANGUAGE C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LANGUAGE=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 ENV AGATE_ADMINISTRATOR_PASSWORD=password
 ENV AGATE_HOME=/srv
@@ -22,7 +22,7 @@ ENV AGATE_VERSION=4.0.0
 RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y gosu apt-transport-https unzip curl python3-pip libcurl4-openssl-dev libssl-dev && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y gosu apt-transport-https wget unzip curl python3-pip libcurl4-openssl-dev libssl-dev && \
   apt-get clean &&  \
   rm -rf /var/lib/apt/lists/*
 
