@@ -6,8 +6,11 @@ services:
                         - "8881:8081"
                 links:
                         - mongo
+                        - mailpit
                 environment:
                         - AGATE_ADMINISTRATOR_PASSWORD=password
+                        # initial public URL (ignored once set in the administration UI)
+                        - AGATE_PUBLIC_URL=http://localhost:8881
                         - MONGO_HOST=mongo
                         - MONGO_PORT=27017
                         - MONGO_DB=agate
@@ -15,6 +18,12 @@ services:
                         - MONGO_PASSWORD=${MONGO_PASSWORD:-password}
                         - RECAPTCHA_SITE_KEY=6Lfo7gYTAAAAAOyl8_MHuH-AVBzRDtpIuJrjL3Pb
                         - RECAPTCHA_SECRET_KEY=6Lfo7gYTAAAAADym-vSDvPBeBCXaxIprA0QXLk_b
+                        # SMTP: any spring.mail.* property of application-prod.yml (e.g. SPRING_MAIL_AUTH_TYPE, SPRING_MAIL_OAUTH2_CLIENT_ID)
+                        - SPRING_MAIL_HOST=mailpit
+                        - SPRING_MAIL_PORT=1025
+                        - SPRING_MAIL_TLS=false
+                        - SPRING_MAIL_AUTH=false
+                        - SPRING_MAIL_FROM=agate@example.org
                 volumes:
                         - /tmp/agate:/srv
         mongo:
@@ -22,3 +31,7 @@ services:
                 environment:
                         - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-obiba}
                         - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-password}
+        mailpit:
+                image: axllent/mailpit
+                ports:
+                        - "8025:8025"
