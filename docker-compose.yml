@@ -6,13 +6,33 @@ services:
                         - "8871:8081"
                 depends_on:
                         - mongo
+                        - mailpit
                 environment:
                         - AGATE_ADMINISTRATOR_PASSWORD=${AGATE_ADMINISTRATOR_PASSWORD}
                         - MONGO_HOST=mongo
                         - MONGO_PORT=27017
                         - RECAPTCHA_SITE_KEY=${RECAPTCHA_SITE_KEY}
                         - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+                        - AGATE_PUBLIC_URL=${AGATE_PUBLIC_URL:-http://localhost:8871}
+                        - SPRING_MAIL_HOST=mailpit
+                        - SPRING_MAIL_PORT=1025
+                        - SPRING_MAIL_TLS=false
+                        - SPRING_MAIL_AUTH=false
+                        - SPRING_MAIL_FROM=agate@example.org
                 volumes:
                         - ${AGATE_DIR}:/srv
+                networks:
+                        - agate
         mongo:
                 image: mongo:8.0
+                networks:
+                        - agate
+        mailpit:
+                image: axllent/mailpit
+                ports:
+                        - "8025:8025"
+                networks:
+                        - agate
+networks:
+        agate:
+                name: agate
