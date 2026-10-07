@@ -6,7 +6,7 @@
 
 FROM maven:3.9-eclipse-temurin-21 AS building
 
-ENV AGATE_BRANCH=npm
+ENV AGATE_BRANCH=master
 
 SHELL ["/bin/bash", "-c"]
 
@@ -18,7 +18,7 @@ RUN git clone https://github.com/obiba/agate.git
 
 WORKDIR /projects/agate
 
-RUN git checkout $AGATE_BRANCH; \
+RUN git checkout $AGATE_BRANCH && \
     mvn clean install && \
     mvn -Prelease org.apache.maven.plugins:maven-antrun-plugin:run@make-deb
 
