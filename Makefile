@@ -3,6 +3,7 @@
 #
 
 no_cache=true
+export tag=snapshot
 
 docker_compose_file=docker-compose.yml
 
@@ -32,10 +33,10 @@ build:
 
 # Build Docker image
 build-image:
-	docker build --pull --no-cache=$(no_cache) -t="obiba/agate:snapshot" .
+	docker build --pull --no-cache=$(no_cache) -t="obiba/agate:$(tag)" .
 
 push-image:
-	docker image push obiba/agate:snapshot
+	docker image push obiba/agate:$(tag)
 
 clean:
 	rm -rf target
